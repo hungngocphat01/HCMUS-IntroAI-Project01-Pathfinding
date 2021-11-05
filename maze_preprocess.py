@@ -47,7 +47,7 @@ def discover_neighbors(i: int, j: int, matrix: list, bonus_points):
 def get_traversable_nodes(matrix):
     """
     Hàm xác định điểm bắt đầu, kết thúc và danh sách các ô có thể đi được trong mê cung.
-    Trả về: (traversable_nodes, start, end): (set, tuple, tuple)
+    Trả về: (traversable_nodes, start, end): (list, tuple, tuple)
     """
     nrows, ncols = len(matrix), len(matrix[0])
     traversable_nodes = []

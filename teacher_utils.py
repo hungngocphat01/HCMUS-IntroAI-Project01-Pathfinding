@@ -19,13 +19,14 @@ def read_file(file_name: str = 'maze.txt'):
 
     return bonus_points, matrix
     
-def visualize_maze(matrix, bonus, start, end, route=None):
+def visualize_maze(matrix, bonus, start, end, route=None, labels=None):
     """
     Args:
       1. matrix: The matrix read from the input file,
       2. bonus: The array of bonus points,
       3. start, end: The starting and ending points,
       4. route: The route from the starting point to the ending one, defined by an array of (x, y), e.g. route = [(1, 2), (1, 3), (1, 4)]
+      5. labels: The label of coords on the map. Is a coord_to_label map.
     """
     #1. Define walls and array of direction based on the route
     walls=[(i,j) for i in range(len(matrix)) for j in range(len(matrix[0])) if matrix[i][j]=='x']
@@ -63,6 +64,12 @@ def visualize_maze(matrix, bonus, start, end, route=None):
         for i in range(len(route)-2):
             plt.scatter(route[i+1][1],-route[i+1][0],
                         marker=direction[i],color='silver')
+            
+    if labels:
+        for coord in labels:
+            plt.text(coord[1],-coord[0],str(labels[coord]),color='red',
+                 horizontalalignment='center',
+                 verticalalignment='center')
 
     plt.text(end[1],-end[0],'EXIT',color='red',
          horizontalalignment='center',
