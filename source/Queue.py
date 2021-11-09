@@ -1,6 +1,6 @@
 class Queue:
     """
-    Biểu diễn một hàng
+    Biểu diễn một hàng đợi
     """
     def __init__(self, priority=False):
         # priority=True: bật mode hàng đợi ưu tiên. Nếu cờ này bằng False: hàng đợi thường
@@ -41,4 +41,3 @@ class Queue:
         Kiểm tra hàng đợi có rỗng hay không.
         """
         return len(self.queue) == 0
-    

@@ -4,7 +4,7 @@
 # Cần phải có docker và phải docker pull texlive/texlive trứoc
 
 PDF:='BaoCaoLab01'
-NOTEBOOKS:= report1 report2
+NOTEBOOKS:= report1 report-nobonus report-cite
 
 $(PDF): main.tex
 	rm -rf build

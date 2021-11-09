@@ -19,5 +19,6 @@ def heuristics(label1: int, label2: int, label_to_coord: dict, p: int):
     distance_vector = (abs(c1 - c2) for c1, c2 in zip(coord1, coord2))
     return lnorm(distance_vector, p)
 
-manhattan_heuristic = lambda label1, label2, label_to_coord: heuristics(label1, label2, label_to_coord, 1)
-euclide_heuristic = lambda label1, label2, label_to_coord: heuristics(label1, label2, label_to_coord, 2)
+# Hàm heuristic ứng với khoảng cách Manhattan và Euler
+manhattan_heuristic = lambda label1, label2, label_to_coord: heuristics(label1, label2, label_to_coord, 1) 
+euclide_heuristic = lambda label1, label2, label_to_coord: heuristics(label1, label2, label_to_coord, 2) 

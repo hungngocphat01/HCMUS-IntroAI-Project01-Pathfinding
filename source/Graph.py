@@ -37,18 +37,20 @@ class Graph:
         """
         Lần ngược lại danh sách các đỉnh đã viếng để tìm ra đường đi.
         Nhận vào: backtracking list của thuật toán.
-        Trả về: đường đi (xếp theo thứ tự start -> end).
+        Trả về: đường đi (xếp theo thứ tự start -> end), chi phí.
         """
         if backtrack_list == None:
             return None 
         
         path = []
         current_node = self.end_label
+        total_cost = 0
         while current_node is not None:
             path.append(current_node)
-            current_node = backtrack_list[current_node]
+            current_node, current_cost = backtrack_list[current_node]
+            total_cost += current_cost
         path.reverse()
-        return path
+        return path, total_cost
         
     
     def convert_path_to_coord(self, path: list) -> list:
