@@ -1,9 +1,11 @@
-class PriorityQueue:
+class Queue:
     """
-    Biểu diễn một hàng đợi ưu tiên
+    Biểu diễn một hàng
     """
-    def __init__(self):
+    def __init__(self, priority=False):
+        # priority=True: bật mode hàng đợi ưu tiên. Nếu cờ này bằng False: hàng đợi thường
         self.queue = []
+        self.priority = priority
     
     def push(self, label, cost):
         """
@@ -12,7 +14,8 @@ class PriorityQueue:
         - `cost`: chi phí của phần tử đó.
         """
         self.queue.append((label, cost))
-        self.queue.sort(key=lambda node: node[1])
+        if self.priority:
+            self.queue.sort(key=lambda node: node[1])
     
     def peek(self):
         """
