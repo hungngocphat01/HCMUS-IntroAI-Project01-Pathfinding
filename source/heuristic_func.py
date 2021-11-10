@@ -5,20 +5,14 @@ def lnorm(vector: tuple, p: int):
     s = sum([pow(abs(v), p) for v in vector])
     return pow(s, 1/p)
 
-def heuristics(label1: int, label2: int, label_to_coord: dict, p: int):
+def heuristics(coord1: tuple, coord2: tuple, p: int):
     """
-    Hàm tính heuristic giữa 2 label trên ma trận bằng khoảng cách Manhattan/Euclide.
-    Tham số:
-    - `label1`, `label2`: nhãn của điểm 1, 2.
-    - `label_to_coord`: ánh xạ từ nhãn sang tọa độ.
-    - `p`: nếu bằng 1 thì tính khoảng cách Manhattan, 2 nếu tính khoảng cách Euclide.
+    Hàm tính heuristic giữa 2 điểm tọa độ bằng khoảng cách Manhattan/Euclide.
     """
-    coord1 = label_to_coord[label1]
-    coord2 = label_to_coord[label2]
     
     distance_vector = (abs(c1 - c2) for c1, c2 in zip(coord1, coord2))
     return lnorm(distance_vector, p)
 
 # Hàm heuristic ứng với khoảng cách Manhattan và Euler
-manhattan_heuristic = lambda label1, label2, label_to_coord: heuristics(label1, label2, label_to_coord, 1) 
-euclide_heuristic = lambda label1, label2, label_to_coord: heuristics(label1, label2, label_to_coord, 2) 
+manhattan_heuristic = lambda coord1, coord2: heuristics(coord1, coord2, 1) 
+euclide_heuristic = lambda coord1, coord2: heuristics(coord1, coord2, 2) 

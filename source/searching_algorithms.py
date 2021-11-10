@@ -4,96 +4,90 @@ from Queue import Queue
 from heuristic_func import *
 
 def DFS(graph: Graph, custom_start=None, custom_end=None):
-    """
-    Hàm tìm kiếm theo giải thuật Deep First Search. Các tham số:
-    - `graph`: đồ thị cần tìm kiếm.
-    - `hf`: con trỏ đến hàm heuristics.
-    `hf` phải có signature như sau: `hf(label1, label2, label_to_coord)`, trả về chi phí từ label1 đến label2.
-    - `custom_start`: nhãn bắt đầu tùy chỉnh. Nếu không có thì lấy nhãn bắt đầu của đồ thị truyền vào.
-    - `custom_end`: nhãn kết thúc tùy chỉnh. Hành xử tương tự như trên.
-    """
-    
     # Kiểm tra người dùng có specify điểm bắt đầu và kết thúc tùy chỉnh hay không
-    start_label = custom_start if custom_start else graph.start_label
-    end_label = custom_end if custom_start else graph.end_label
+    # Phục vụ cho phần điểm thưởng
+    start_coord = custom_start if custom_start else graph.start
+    end_coord = custom_end if custom_start else graph.end
     
     # Bộ nhớ fringe cho DFS là một stack
     fringe = Stack()
+    # Tập đóng, chứa tọa độ các đỉnh đã đi qua
+    visited_coords = set()
+    # Đánh dấu node bắt đầu là đã đi
+    visited_coords.add(start_coord)
     
-    # Dictionary để truy ngược các node đã viếng (dưới dạng "giả" một DSLK đơn)
-    # Key: Node cần truy, Value: tuple(nhãn node liền trước, chi phí đường đi)
-    visited = {start_label: (None, 0)}
-    
-    # Gắn node bắt đầu vào hàng đợi với chi phí 0
-    fringe.push(start_label, 0)
+    # Gắn node bắt đầu vào stack với chi phí 0
+    fringe.push(start_coord, 0)
     
     while not fringe.is_empty():
-        # Lấy ra node kế trong stack
-        current_node, _ = fringe.pop()
+        # Lấy ra tọa độ node kế trong stack
+        current_node_coord, _ = fringe.pop()
         
         # Lấy ra danh sách các đỉnh kề với node này
-        successors = graph.get_successor(current_node)
-        # Nếu là dead end: bỏ qua node này và không đụng tới nữa
+        successors = graph.get_successor(current_node_coord)
+        # Nếu là dead end: bỏ qua node này
         if len(successors) == 0:
-            fringe.pop()
             continue
         
         # Kiểm tra từng node kế
-        for succ_node, succ_cost in successors:
-            # Kiểm tra xem node đã viếng chưa. Nếu chưa thì thêm vào danh sách
-            if succ_node not in visited:
-                visited[succ_node] = (current_node, succ_cost)
-                # DFS không có heuristic nên h(x) = 0
-                fringe.push(succ_node, 0)
-                
-            # Nếu node kế là đích đến: ồ yeah
-            if succ_node == end_label:
-                return visited
+        for node in successors:
+            # Nếu node chưa viếng
+            if node['coord'] not in visited_coords:
+                # Thêm tọa độ của node vào tập đóng
+                visited_coords.add(node['coord'])
+                # Cập nhật lại node liền trước
+                graph.update_prev_node(node['coord'], current_node_coord)
+                # Thêm vào fringe
+                fringe.push(node['coord'], 0)
             
-    return None
+            # Nếu node kế là đích đến: ồ yeah
+            if node['coord'] == end_coord:
+                return True
+            
+    return False
 
-
-def GBFS(graph: Graph, hf, custom_start=None, custom_end=None):
-    """
-    Hàm tìm kiếm theo giải thuật Greedy Best First Search. Các tham số:
-    - `graph`: đồ thị cần tìm kiếm.
-    - `hf`: con trỏ đến hàm heuristics.
-    `hf` phải có signature như sau: `hf(label1, label2, label_to_coord)`, trả về chi phí từ label1 đến label2.
-    - `custom_start`: nhãn bắt đầu tùy chỉnh. Nếu không có thì lấy nhãn bắt đầu của đồ thị truyền vào.
-    - `custom_end`: nhãn kết thúc tùy chỉnh. Hành xử tương tự như trên.
-    """
-    
+def Astar(graph: Graph, hf, custom_start=None, custom_end=None):
     # Kiểm tra người dùng có specify điểm bắt đầu và kết thúc tùy chỉnh hay không
-    start_label = custom_start if custom_start else graph.start_label
-    end_label = custom_end if custom_start else graph.end_label
+    # Phục vụ cho phần điểm thưởng
+    start_coord = custom_start if custom_start else graph.start
+    end_coord = custom_end if custom_start else graph.end
     
-    # Hàng đợi ưu tiên
+    # Bộ nhớ fringe cho A* là một priority queue
     fringe = Queue(priority=True)
+    # Tập đóng, chứa tọa độ các đỉnh đã đi qua
+    visited_coords = set()
+    # Đánh dấu node bắt đầu là đã đi
+    visited_coords.add(start_coord)
     
-    # Dictionary để truy ngược các node đã viếng (dưới dạng "giả" một DSLK đơn)
-    # Key: Node cần truy, Value: tuple(nhãn node liền trước, chi phí đường đi)
-    visited = {start_label: (None, 0)}
-    
-    # Gắn node bắt đầu vào hàng đợi với chi phí 0
-    fringe.push(start_label, 0)
+    # Gắn node bắt đầu vào queue với chi phí 0
+    fringe.push(start_coord, 0)
     
     while not fringe.is_empty():
-        # Lấy ra node có chi phí thấp nhất
-        current_node, current_cost = fringe.pop()
+        # Lấy ra tọa độ node kế trong queue
+        current_node_coord, current_node_cost = fringe.pop()
         
         # Lấy ra danh sách các đỉnh kề với node này
-        successors = graph.get_successor(current_node)
+        successors = graph.get_successor(current_node_coord)
+        # Nếu là dead end: bỏ qua node này
+        if len(successors) == 0:
+            continue
         
-        # Kiểm tra từng node kế 
-        for succ_node, succ_cost in successors:
-            # Kiểm tra xem node đã viếng chưa. Nếu chưa thì thêm vào fringe
-            if succ_node not in visited:
-                heuristic_cost = hf(succ_node, end_label, graph.label_to_coord)
-                visited[succ_node] = (current_node, succ_cost)
-                fringe.push(succ_node, heuristic_cost)
-                
-            # Nếu node kế là đích đến: ồ yeah
-            if succ_node == end_label:
-                return visited
+        # Kiểm tra từng node kế
+        for node in successors:
+            # Nếu node chưa viếng
+            if node['coord'] not in visited_coords:
+                # Thêm tọa độ của node vào tập đóng
+                visited_coords.add(node['coord'])
+                # Cập nhật lại node liền trước
+                graph.update_prev_node(node['coord'], current_node_coord)
+                # Tính heuristic
+                heuristic_cost = hf(node['coord'], end_coord)
+                # Tính chi phí từ start đến node hiện tại = chi phí từ start đến node trước + chi phí từ node trước đến node này
+                path_cost = current_node_cost + node['cost']
+                fringe.push(node['coord'], heuristic_cost + path_cost)
             
-    return None
+            # Nếu node kế là đích đến: ồ yeah
+            if node['coord'] == end_coord:
+                return True
+            
+    return False

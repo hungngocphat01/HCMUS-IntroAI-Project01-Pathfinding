@@ -1,8 +1,9 @@
 0
 xxxxxxxxxxxxxxxxx
 x               x
-xxxxxx xxxxxxxx x
+x               x
+       xxxxxxxx x
 x        x      x
+x        x   S  x
 x        x      x
-x        x     Sx
-xxxxxx xxxxxxxxxx
+xxxxxxxxxxxxxxxxx
