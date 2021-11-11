@@ -36,6 +36,19 @@ class Queue:
         del self.queue[0]
         return element
     
+    def contains(self, element):
+        for e in self.queue:
+            if element == e:
+                return True
+        return False
+    
+    def update_fcost(self, element, cost):
+        for i, e in enumerate(self.queue):
+            if e == element:
+                self.queue[i][1] = cost
+        if self.priority:
+            self.queue.sort(key=lambda node: node[1])
+    
     def is_empty(self):
         """
         Kiểm tra hàng đợi có rỗng hay không.

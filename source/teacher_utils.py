@@ -19,7 +19,7 @@ def read_file(file_name: str = 'maze.txt'):
 
     return bonus_points, matrix
     
-def visualize_maze(matrix, bonus, start, end, route=None, labels=None):
+def visualize_maze(matrix, bonus, start, end, route=None, figsize=(10, 10), visited=None):
     """
     Args:
       1. matrix: The matrix read from the input file,
@@ -46,7 +46,7 @@ def visualize_maze(matrix, bonus, start, end, route=None, labels=None):
         direction.pop(0)
 
     #2. Drawing the map
-    ax=plt.figure(dpi=100).add_subplot(111)
+    ax=plt.figure(figsize=figsize, dpi=100).add_subplot(111)
 
     for i in ['top','bottom','right','left']:
         ax.spines[i].set_visible(False)
@@ -63,13 +63,13 @@ def visualize_maze(matrix, bonus, start, end, route=None, labels=None):
     if route:
         for i in range(len(route)-2):
             plt.scatter(route[i+1][1],-route[i+1][0],
-                        marker=direction[i],color='silver')
-            
-    if labels:
-        for coord in labels:
-            plt.text(coord[1],-coord[0],str(labels[coord]),color='red',
-                 horizontalalignment='center',
-                 verticalalignment='center')
+                        marker=direction[i],color='red')
+    
+    # Drawing visited nodes
+    if visited:
+        for node in visited:
+            plt.scatter(node[1],-node[0],marker='.',
+                s=50,color='silver')
 
     plt.text(end[1],-end[0],'EXIT',color='red',
          horizontalalignment='center',

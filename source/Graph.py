@@ -28,6 +28,12 @@ class Graph:
         for node in self.node_list[coord].neighbors:
             succs.append(node)
         return succs
+
+    def get_path_cost(self, coord):
+        return self.node_list[coord].path_cost
+    
+    def set_path_cost(self, coord, path_cost):
+        self.node_list[coord].path_cost = path_cost
     
     def update_prev_node(self, coord: tuple, prev_coord: tuple):
         """
@@ -44,6 +50,10 @@ class Graph:
 
     def get_path(self):
         node = self.node_list[self.end]
+        if node.prev == None:
+            print('Không tìm được đường đi')
+            return 
+            
         path = []
         cost = 0
         while node.coord != self.start:
@@ -54,9 +64,25 @@ class Graph:
         path.reverse()
         return path, cost
     
-    def visualize(self, route=None, debug=False):
+    def get_visited(self):
+        visited = set()
+        for node in self.node_list:
+            if self.node_list[node].prev != None:
+                visited.add(node)
+        path, cost = self.get_path()
+        visited = visited - set(path)
+        return visited, list(path), cost
+    
+    def visualize(self, route=None, debug=False, figsize=(10, 10), visited=None):
         """
         Vẽ mê cung của đồ thị này
         """
-        visualize_maze(self.ascii_matrix, self.bonus_points, self.start, self.end, route)
+        visualize_maze(self.ascii_matrix, self.bonus_points, 
+                       self.start, self.end, route, figsize=figsize, visited=visited)
+    
+    def clear(self):
+        for node in self.node_list:
+            self.node_list[node].prev = None
+            self.node_list[node].prev_cost = None
+            self.node_list[node].path_cost = 1e9
     

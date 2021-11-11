@@ -7,11 +7,12 @@ class Node:
         self.prev_cost = 0
         # Danh sách kề
         self.neighbors = []
+        self.path_cost = 1e9
 
     def __repr__(self):
         return f'<Node coord={self.coord} prev={self.prev} neighbors={self.neighbors}>'
         
-def get_neighbor_cost(i: int, j: int, bonus_points: list, default_cost=1):
+def get_neighbor_cost(i: int, j: int, bonus_points: list, default_cost=50):
     """
     Hàm trả về 1 tuple 3 tham số gồm tọa độ và chi phí đường đi đến node kề. 
     Returns: dictionary, có các key:
