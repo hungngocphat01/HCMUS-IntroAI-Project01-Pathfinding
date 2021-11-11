@@ -73,7 +73,6 @@ def Astar(graph: Graph, hf, custom_start=None, custom_end=None):
             # Nếu đã viếng: bỏ qua
             if succ['coord'] in visited:
                 continue 
-            visited.add(succ['coord'])
             # Nếu chưa có trong open list: thêm vào open list    
             if not fringe.contains(succ['coord']): 
                 graph.update_prev_node(succ['coord'], current_node_coord)
