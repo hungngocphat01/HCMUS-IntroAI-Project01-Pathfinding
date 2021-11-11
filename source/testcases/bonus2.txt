@@ -1,5 +1,5 @@
 1
-19 11 -5
+19 11 -7
 xxxxxxxxxxxxxxxxxxxxx
 xSx x             x x
 x x x x xxxxx x x x x
@@ -11,7 +11,7 @@ x x x x x     x     x
 x x xxx xxxxx x xxx x
 x   x   x           x
 x x x xxxxxxx xxx xxx
-x x       x     x x x
+x x       x  +  x x x
 x x xxx xxx x x xxx x
 x x x       x x     x
 x x xxxxxxxxx x xxx x

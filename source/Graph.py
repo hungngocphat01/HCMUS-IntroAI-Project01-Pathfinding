@@ -8,13 +8,18 @@ class Graph:
     """
     def __init__(self, filename):
         # Đọc thông tin từ file
-        self.bonus_points, self.ascii_matrix = read_file(filename)
-        # Tiền xử lý mê cung
-        out = preprocess_maze(self.ascii_matrix, self.bonus_points)
-        # Trích xuất các thông tin từ bước tiền xử lý 
-        self.start = out['start']
-        self.end = out['end']
-        self.node_list = out['node_list']
+        if filename is not None:
+            self.bonus_points, self.ascii_matrix = read_file(filename)
+            # Tiền xử lý mê cung
+            out = preprocess_maze(self.ascii_matrix, self.bonus_points)
+            # Trích xuất các thông tin từ bước tiền xử lý 
+            self.start = out['start']
+            self.end = out['end']
+            self.node_list = out['node_list']
+        else:
+            self.start = None 
+            self.end = None 
+            self.node_list = None
     
     def get_successor(self, coord) -> list:
         """
