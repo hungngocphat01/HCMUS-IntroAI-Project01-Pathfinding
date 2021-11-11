@@ -7,18 +7,24 @@ class Node:
         self.prev_cost = 0
         # Danh sách kề
         self.neighbors = []
-        self.path_cost = 1e9
+        self.path_cost = 0
 
     def __repr__(self):
         return f'<Node coord={self.coord} prev={self.prev} neighbors={self.neighbors}>'
         
-def get_neighbor_cost(i: int, j: int, bonus_points: list, default_cost=50):
+def get_neighbor_cost(i: int, j: int, bonus_points: list):
     """
     Hàm trả về 1 tuple 3 tham số gồm tọa độ và chi phí đường đi đến node kề. 
     Returns: dictionary, có các key:
     - `coord`: tọa độ của vị trí đang xét.
     - `cost`: trọng số của đường đi từ vị trí 
     """
+    # Tìm số nhỏ nhất của các điểm thưởng (tức trị tuyệt đối lớn nhất)
+    if bonus_points is None or len(bonus_points) == 0:
+        default_cost = 1
+    else:
+        default_cost = abs(min(bonus_points, key=lambda point: point[2])[2])
+
     for bonus in bonus_points:
         if (bonus[0], bonus[1]) == (i, j):
             return {'coord': (i, j), 'cost': default_cost + bonus[2]}

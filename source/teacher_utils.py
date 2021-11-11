@@ -19,7 +19,7 @@ def read_file(file_name: str = 'maze.txt'):
 
     return bonus_points, matrix
     
-def visualize_maze(matrix, bonus, start, end, route=None, figsize=(10, 10), visited=None):
+def visualize_maze(matrix: list, bonus: list, start: tuple, end: tuple, route=None, figsize=(10, 10), visited=None):
     """
     Args:
       1. matrix: The matrix read from the input file,

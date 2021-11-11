@@ -73,14 +73,16 @@ def Astar(graph: Graph, hf, custom_start=None, custom_end=None):
             # Nếu đã viếng: bỏ qua
             if succ['coord'] in visited:
                 continue 
+            visited.add(succ['coord'])
             # Nếu chưa có trong open list: thêm vào open list    
             if not fringe.contains(succ['coord']): 
                 graph.update_prev_node(succ['coord'], current_node_coord)
                 
                 hcost = hf(succ['coord'], end_coord)
-                gcost = graph.get_path_cost(succ['coord'])
+                gcost = graph.get_path_cost(current_node_coord) + succ['cost']
                 fcost = hcost + gcost
                 
+                graph.set_path_cost(succ['coord'], gcost)
                 fringe.push(succ['coord'], fcost)
             # Nếu có rồi
             else:
@@ -93,6 +95,5 @@ def Astar(graph: Graph, hf, custom_start=None, custom_end=None):
                     graph.set_path_cost(succ['coord'], new_gcost)
                     hcost = hf(succ['coord'], end_coord)
                     fcost = hcost + new_gcost
-                    fringe.update_fcost(succ['coord'], fcost)
-                    
+                    fringe.update_fcost(succ['coord'], fcost)                    
     return False

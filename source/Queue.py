@@ -38,7 +38,7 @@ class Queue:
     
     def contains(self, element):
         for e in self.queue:
-            if element == e:
+            if element == e[0]:
                 return True
         return False
     

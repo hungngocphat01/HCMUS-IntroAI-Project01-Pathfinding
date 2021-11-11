@@ -48,7 +48,11 @@ class Graph:
                 prev_cost = neighbor['cost']
         self.node_list[coord].prev_cost = prev_cost
 
-    def get_path(self):
+    def get_path(self) -> tuple:
+        """
+        Lấy đường đi của mê cung sau khi đã giải xong.
+        Trả về: danh sách các tọa độ từ START -> END và tổng chi phí.
+        """
         node = self.node_list[self.end]
         if node.prev == None:
             print('Không tìm được đường đi')
@@ -64,7 +68,11 @@ class Graph:
         path.reverse()
         return path, cost
     
-    def get_visited(self):
+    def get_visited(self) -> tuple:
+        """
+        Trả về các đỉnh đã viếng trong quá trình duyệt (để minh họa tốt hơn).
+        Kết quả: các đỉnh đã viếng, đường đi từ START -> END, tổng chi phí đường đi
+        """
         visited = set()
         for node in self.node_list:
             if self.node_list[node].prev != None:
@@ -73,7 +81,7 @@ class Graph:
         visited = visited - set(path)
         return visited, list(path), cost
     
-    def visualize(self, route=None, debug=False, figsize=(10, 10), visited=None):
+    def visualize(self, route=None, visited=None, figsize=(5, 3)):
         """
         Vẽ mê cung của đồ thị này
         """
@@ -81,8 +89,11 @@ class Graph:
                        self.start, self.end, route, figsize=figsize, visited=visited)
     
     def clear(self):
+        """
+        Xóa các thông tin về đường đi của đồ thị (để chạy thuật toán mới)
+        """
         for node in self.node_list:
             self.node_list[node].prev = None
             self.node_list[node].prev_cost = None
-            self.node_list[node].path_cost = 1e9
+            self.node_list[node].path_cost = 0
     
