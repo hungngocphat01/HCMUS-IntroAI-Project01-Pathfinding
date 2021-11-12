@@ -20,14 +20,14 @@ def get_neighbor_cost(i: int, j: int, bonus_points: list):
     - `cost`: trọng số của đường đi từ vị trí 
     """
     # Tìm số nhỏ nhất của các điểm thưởng (tức trị tuyệt đối lớn nhất)
-    if bonus_points is None or len(bonus_points) == 0:
-        default_cost = 1
-    else:
-        default_cost = abs(min(bonus_points, key=lambda point: point[2])[2])
-
-    for bonus in bonus_points:
-        if (bonus[0], bonus[1]) == (i, j):
-            return {'coord': (i, j), 'cost': default_cost + bonus[2]}
+#     if bonus_points is None or len(bonus_points) == 0:
+#         default_cost = 1
+#     else:
+#         default_cost = abs(min(bonus_points, key=lambda point: point[2])[2])
+    default_cost = 1
+#     for bonus in bonus_points:
+#         if (bonus[0], bonus[1]) == (i, j):
+#             return {'coord': (i, j), 'cost': default_cost + bonus[2]}
     return {'coord': (i, j), 'cost': default_cost}
 
 def is_not_wall(matrix: list, i: int, j: int):

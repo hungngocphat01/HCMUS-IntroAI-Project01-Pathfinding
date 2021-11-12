@@ -43,7 +43,7 @@ def DFS(graph: Graph, custom_start=None, custom_end=None):
     # Kiểm tra người dùng có specify điểm bắt đầu và kết thúc tùy chỉnh hay không
     # Phục vụ cho phần điểm thưởng
     start_coord = custom_start if custom_start else graph.start
-    end_coord = custom_end if custom_start else graph.end
+    end_coord = custom_end if custom_end else graph.end
     
     # Bộ nhớ fringe cho DFS là một stack
     fringe = Stack()
@@ -86,7 +86,7 @@ def Astar(graph: Graph, hf, custom_start=None, custom_end=None):
     # Kiểm tra người dùng có specify điểm bắt đầu và kết thúc tùy chỉnh hay không
     # Phục vụ cho phần điểm thưởng
     start_coord = custom_start if custom_start else graph.start
-    end_coord = custom_end if custom_start else graph.end
+    end_coord = custom_end if custom_end else graph.end
     
     # Bộ nhớ fringe cho A* là một priority queue
     fringe = Queue(priority=True)
