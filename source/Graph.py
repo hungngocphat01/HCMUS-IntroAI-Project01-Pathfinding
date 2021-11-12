@@ -53,19 +53,22 @@ class Graph:
                 prev_cost = neighbor['cost']
         self.node_list[coord].prev_cost = prev_cost
 
-    def get_path(self) -> tuple:
+    def get_path(self, custom_start=None, custom_end=None) -> tuple:
         """
         Lấy đường đi của mê cung sau khi đã giải xong.
         Trả về: danh sách các tọa độ từ START -> END và tổng chi phí.
         """
-        node = self.node_list[self.end]
+        start_coord = custom_start if custom_start else self.start
+        end_coord = custom_end if custom_end else self.end
+
+        node = self.node_list[end_coord]
         if node.prev == None:
             print('Không tìm được đường đi')
             return 
             
         path = []
         cost = 0
-        while node.coord != self.start:
+        while node.coord != start_coord:
             path.append(node.coord)
             cost += node.prev_cost
             node = self.node_list[node.prev]
@@ -73,7 +76,7 @@ class Graph:
         path.reverse()
         return path, cost
     
-    def get_visited(self) -> tuple:
+    def get_visited(self, custom_start=None, custom_end=None) -> tuple:
         """
         Trả về các đỉnh đã viếng trong quá trình duyệt (để minh họa tốt hơn).
         Kết quả: các đỉnh đã viếng, đường đi từ START -> END, tổng chi phí đường đi
@@ -82,7 +85,7 @@ class Graph:
         for node in self.node_list:
             if self.node_list[node].prev != None:
                 visited.add(node)
-        path, cost = self.get_path()
+        path, cost = self.get_path(custom_start, custom_end)
         visited = visited - set(path)
         return visited, list(path), cost
     

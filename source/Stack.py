@@ -5,7 +5,7 @@ class Stack:
     def __init__(self):
         self.stack = []
     
-    def push(self, label, cost):
+    def push(self, label, cost=None):
         """
         Hàm thêm phần tử vào ngăn xếp. Nhận 2 tham số:
         - `label`: nhãn của phần tử.
