@@ -29,8 +29,8 @@ def make_routing_graph(g: Graph, hf):
     
     # Với mỗi điểm thưởng 
     for bonus in g.bonus_points:
-        new_coord = (bonus[0], bonus[1])
-        new_cost = bonus[2]
+        new_coord = bonus['coord']
+        new_cost = bonus['score']
         bonus_values[new_coord] = new_cost
         
         # Tạo một đỉnh tương ứng với tọa độ của nó
@@ -86,17 +86,19 @@ def bonus_traversal_wrapper(g: Graph, algorithm, journey: list):
     traversed = Stack()
     
     prev_loc, prev_index = waiting_list.pop()
+    visited = set()
     
     while not waiting_list.is_empty():
+        print(len(visited))
         g.clear()
         next_dest, next_index = waiting_list.pop()
-        print('Going from', prev_loc, 'to', next_index)
-        
-        result = algorithm(g, start=prev_loc, end=next_dest)
+        print('Going from', prev_loc, 'to', next_dest)
+        result = algorithm(g, prev_loc, next_dest, custom_visited=visited)
         
         if not result:
             print('Result not found, backtracking...')
-            journey_data.pop()
+            segment, _ = journey_data.pop()
+            visited = visited - segment['visited']
             waiting_list.push(next_dest, next_index)
             prev_loc, prev_index = traversed.pop()
             continue
@@ -104,7 +106,7 @@ def bonus_traversal_wrapper(g: Graph, algorithm, journey: list):
         print('Result found! Keep going!')
         visited, path, cost = g.get_visited(prev_loc, next_dest)
         journey_data.push({'visited': visited, 'path': path, 'cost': cost})
-        traversed.push((prev_loc, prev_index))
+        traversed.push(prev_loc, prev_index)
         
         prev_loc, prev_index = next_dest, next_index
         

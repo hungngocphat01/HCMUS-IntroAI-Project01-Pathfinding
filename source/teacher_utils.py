@@ -54,7 +54,7 @@ def visualize_maze(matrix: list, bonus: list, start: tuple, end: tuple, route=No
     plt.scatter([i[1] for i in walls],[-i[0] for i in walls],
                 marker='X',s=100,color='black')
     
-    plt.scatter([i[1] for i in bonus],[-i[0] for i in bonus],
+    plt.scatter([i['coord'][1] for i in bonus],[-i['coord'][0] for i in bonus],
                 marker='P',s=100,color='green')
 
     plt.scatter(start[1],-start[0],marker='*',
@@ -82,4 +82,4 @@ def visualize_maze(matrix: list, bonus: list, start: tuple, end: tuple, route=No
     print(f'Ending point (x, y) = {end[0], end[1]}')
     
     for _, point in enumerate(bonus):
-        print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
+        print(f"Bonus point at position (x, y) = {point['coord'][0], point['coord'][1]} with point {point['score']}")

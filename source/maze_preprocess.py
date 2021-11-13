@@ -25,9 +25,9 @@ def get_neighbor_cost(i: int, j: int, bonus_points: list):
 #     else:
 #         default_cost = abs(min(bonus_points, key=lambda point: point[2])[2])
     default_cost = 1
-#     for bonus in bonus_points:
-#         if (bonus[0], bonus[1]) == (i, j):
-#             return {'coord': (i, j), 'cost': default_cost + bonus[2]}
+    for bonus in bonus_points:
+        if (bonus[0], bonus[1]) == (i, j):
+            return {'coord': (i, j), 'cost': default_cost + bonus[2]}
     return {'coord': (i, j), 'cost': default_cost}
 
 def is_not_wall(matrix: list, i: int, j: int):

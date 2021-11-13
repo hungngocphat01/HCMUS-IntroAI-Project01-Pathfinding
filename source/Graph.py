@@ -9,13 +9,19 @@ class Graph:
     def __init__(self, filename):
         # Đọc thông tin từ file
         if filename is not None:
-            self.bonus_points, self.ascii_matrix = read_file(filename)
+            bonus_points, self.ascii_matrix = read_file(filename)
             # Tiền xử lý mê cung
-            out = preprocess_maze(self.ascii_matrix, self.bonus_points)
+            out = preprocess_maze(self.ascii_matrix, bonus_points)
             # Trích xuất các thông tin từ bước tiền xử lý 
             self.start = out['start']
             self.end = out['end']
             self.node_list = out['node_list']
+            
+            self.bonus_points = []
+            for point in bonus_points:
+                self.bonus_points.append({
+                    'coord': (point[0], point[1]), 'score': point[2]
+                })
             
             print('Graph initialized from maze with size', len(self.ascii_matrix), 'x', len(self.ascii_matrix[0]))
         else:
@@ -73,12 +79,12 @@ class Graph:
         cost = 0
         while node.coord != start_coord:
             path.append(node.coord)
-            cost += node.prev_cost
+            cost += 1
             # Xử lý điểm thưởng nếu có
             if self.bonus_points is not None:
                 for bonus in self.bonus_points:
-                    if (bonus[0], bonus[1]) == node.coord:
-                        cost += bonus[2]
+                    if bonus['coord'] == node.coord:
+                        cost += bonus['score']
             # Đến node tiếp theo
             node = self.node_list[node.prev]
         path.append(self.start)
