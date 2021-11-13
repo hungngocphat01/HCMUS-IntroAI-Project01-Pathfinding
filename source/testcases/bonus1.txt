@@ -3,8 +3,8 @@
 xxxxxxxxxxxxxxxxx
 x               x
 x               x
-       xxxxxxxx x
-x        x      x
-x        x   S  x
-x        x      x
+x        xxxxxx x
+         x  S   x
+x        xxxxx  x
+x               x
 xxxxxxxxxxxxxxxxx
