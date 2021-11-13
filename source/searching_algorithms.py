@@ -2,8 +2,35 @@ from Graph import Graph
 from Stack import Stack
 from Queue import Queue
 from heuristic_func import *
+<<<<<<< HEAD
 from copy import deepcopy
 
+=======
+def GBFS(graph: Graph,hf, custom_start=None, custom_end=None): 
+    # Kiểm tra người dùng có specify điểm bắt đầu và kết thúc tùy chỉnh hay không
+    # Phục vụ cho phần điểm thưởng
+    start_coord = custom_start if custom_start else graph.start
+    end_coord = custom_end if custom_start else graph.end    
+    # Bộ nhớ fringe cho A* là một priority queue
+    fringe = Queue(priority=True)
+    # Tập đóng, chứa tọa độ các đỉnh đã đi qua
+    visited = set()
+    fringe.push(start_coord,0)
+    while not fringe.is_empty():
+        current_node_coord, current_fcost_=fringe.pop()
+        visited.add(current_node_coord)
+        if current_node_coord==end_coord:
+            return True
+        else:
+            successors = graph.get_successor(current_node_coord)
+            for succ in successors:
+                if succ['coord'] not in visited:
+                    visited.add(succ['coord'])
+                    graph.update_prev_node(succ['coord'], current_node_coord)
+                    fcost=hf(succ['coord'], end_coord)
+                    fringe.push(succ['coord'],fcost)
+    return False
+>>>>>>> 6768739f4709ccdb7971715d872e37cad13df849
 def BFS(graph: Graph, custom_start=None, custom_end=None):
     # Kiểm tra người dùng có specify điểm bắt đầu và kết thúc tùy chỉnh hay không
     # Phục vụ cho phần điểm thưởng

@@ -5,8 +5,17 @@
 xxxxxxxxxxxxxxxxx
 x+              x
 x               x
+<<<<<<< HEAD
 x        xxxxxx x
 x        x      x
 x        x   S  x
 x        x+    +x
 x xxxxxxxxxxxxxxx
+=======
+x               x
+x        xxxxxx x
+         x  S   x
+x        xxxxx  x
+x               x
+xxxxxxxxxxxxxxxxx
+>>>>>>> 6768739f4709ccdb7971715d872e37cad13df849
