@@ -122,12 +122,5 @@ def process_journey(g: Graph, journey: list):
         path += segment[0]['path']
         cost += segment[0]['cost']
         visited.union(segment[0]['visited'])
-    
-    visited = list(visited)
-    for node in path:
-        for bonus in g.bonus_points:
-            if node == (bonus[0], bonus[1]):
-                cost += bonus[2]
-                print('Visited', node)
-    
+        
     return list(visited), path, cost

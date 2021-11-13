@@ -16,7 +16,10 @@ class Graph:
             self.start = out['start']
             self.end = out['end']
             self.node_list = out['node_list']
+            
+            print('Graph initialized from maze with size', len(self.ascii_matrix), 'x', len(self.ascii_matrix[0]))
         else:
+            self.bonus_points, self.ascii_matrix = None, None
             self.start = None 
             self.end = None 
             self.node_list = None
@@ -71,6 +74,12 @@ class Graph:
         while node.coord != start_coord:
             path.append(node.coord)
             cost += node.prev_cost
+            # Xử lý điểm thưởng nếu có
+            if self.bonus_points is not None:
+                for bonus in self.bonus_points:
+                    if (bonus[0], bonus[1]) == node.coord:
+                        cost += bonus[2]
+            # Đến node tiếp theo
             node = self.node_list[node.prev]
         path.append(self.start)
         path.reverse()
