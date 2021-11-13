@@ -80,14 +80,15 @@ class Graph:
         while node.coord != start_coord:
             path.append(node.coord)
             cost += 1
-            # Xử lý điểm thưởng nếu có
-            if self.bonus_points is not None:
-                for bonus in self.bonus_points:
-                    if bonus['coord'] == node.coord:
-                        cost += bonus['score']
             # Đến node tiếp theo
             node = self.node_list[node.prev]
         path.append(self.start)
+        
+        for node in path:
+            if self.bonus_points is not None:
+                for bonus in self.bonus_points:
+                    if bonus['coord'] == node:
+                        cost += bonus['score']
         path.reverse()
         return path, cost
     

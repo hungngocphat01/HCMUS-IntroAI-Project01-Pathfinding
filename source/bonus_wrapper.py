@@ -5,6 +5,9 @@ from maze_preprocess import Node
 from copy import deepcopy
 
 def make_routing_graph(g: Graph, hf):
+    """
+    Hàm xây dựng đồ thị định hướng. Nhận vào đồ thị gốc và hàm heuristic để ước lượng khoảng cách giữa các đỉnh.
+    """
     # Khởi tạo một đồ thị rỗng
     routing = Graph(None)
     start = g.start 
@@ -18,10 +21,10 @@ def make_routing_graph(g: Graph, hf):
         end: Node(end)
     }
     # Nối start và end
-    node_list[start].neighbors.append({
-        'coord': end, 
-        'cost': hf(end, start)
-    })
+#     node_list[start].neighbors.append({
+#         'coord': end, 
+#         'cost': hf(end, start)
+#     })
     
     # Danh sách các đỉnh tương ứng với từng điểm thưởng
     bonus_nodes = []
@@ -77,6 +80,9 @@ def make_routing_graph(g: Graph, hf):
     return routing
 
 def bonus_traversal_wrapper(g: Graph, algorithm, journey: list):  
+    """
+    Hàm chạy thuật toán tìm kiếm
+    """
     waiting_list = Queue(priority=True)
     
     for i, bonus in enumerate(journey):
@@ -86,10 +92,15 @@ def bonus_traversal_wrapper(g: Graph, algorithm, journey: list):
     traversed = Stack()
     
     prev_loc, prev_index = waiting_list.pop()
-    visited = set()
     
     while not waiting_list.is_empty():
-        print(len(visited))
+        # Tạo một tập đóng bao gồm những đường đi của các chặng trước
+        # Để ngăn thuật toán đi vào 1 ô 2 lần
+        visited = set()
+        for segment, _ in journey_data.stack:
+            for node in segment['path']:
+                visited.add(node)
+       
         g.clear()
         next_dest, next_index = waiting_list.pop()
         print('Going from', prev_loc, 'to', next_dest)
@@ -98,7 +109,6 @@ def bonus_traversal_wrapper(g: Graph, algorithm, journey: list):
         if not result:
             print('Result not found, backtracking...')
             segment, _ = journey_data.pop()
-            visited = visited - segment['visited']
             waiting_list.push(next_dest, next_index)
             prev_loc, prev_index = traversed.pop()
             continue
