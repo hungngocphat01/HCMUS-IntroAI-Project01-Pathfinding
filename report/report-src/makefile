@@ -4,7 +4,7 @@
 # Cần phải có docker và phải docker pull texlive/texlive trứoc
 
 PDF:='BaoCaoLab01'
-NOTEBOOKS:= report1 report-nobonus report-withbonus report-summary report-cite
+NOTEBOOKS:= report1 report-nobonus report-withbonus report-teleport report-summary report-cite
 
 $(PDF): main.tex
 	mv tmp/main_files .  
