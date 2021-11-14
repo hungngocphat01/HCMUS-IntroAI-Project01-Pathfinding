@@ -54,3 +54,9 @@ class Queue:
         Kiểm tra hàng đợi có rỗng hay không.
         """
         return len(self.queue) == 0
+    
+    def clear(self):
+        """
+        Dọn dẹp hàng đợi (xóa tất cả phần tử)
+        """
+        self.queue.clear()

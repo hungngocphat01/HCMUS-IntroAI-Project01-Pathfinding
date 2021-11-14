@@ -116,7 +116,6 @@ def GBFS(graph: Graph, hf, custom_start=None, custom_end=None, custom_visited=No
             if node['coord'] not in visited_coords:
                 # Thêm tọa độ của node vào tập đóng
                 visited_coords.add(node['coord'])
-                # Cập nhật lại node liền trước
                 graph.update_prev_node(node['coord'], current_node_coord)
                 # Thêm vào fringe
                 fcost = hf(node['coord'], end_coord)

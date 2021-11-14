@@ -19,7 +19,7 @@ def read_file(file_name: str = 'maze.txt'):
 
     return bonus_points, matrix
     
-def visualize_maze(matrix: list, bonus: list, start: tuple, end: tuple, route=None, figsize=(10, 10), visited=None):
+def visualize_maze(matrix: list, bonus: list, start: tuple, end: tuple, route=None, figsize=(10, 10), visited=None, dont_show=False):
     """
     Args:
       1. matrix: The matrix read from the input file,
@@ -46,7 +46,8 @@ def visualize_maze(matrix: list, bonus: list, start: tuple, end: tuple, route=No
         direction.pop(0)
 
     #2. Drawing the map
-    ax=plt.figure(figsize=figsize, dpi=100).add_subplot(111)
+    fig = plt.figure(figsize=figsize, dpi=100)
+    ax= fig.add_subplot(111)
 
     for i in ['top','bottom','right','left']:
         ax.spines[i].set_visible(False)
@@ -76,10 +77,14 @@ def visualize_maze(matrix: list, bonus: list, start: tuple, end: tuple, route=No
          verticalalignment='center')
     plt.xticks([])
     plt.yticks([])
-    plt.show()
+    
+    if not dont_show:
+        plt.show()
 
     print(f'Starting point (x, y) = {start[0], start[1]}')
     print(f'Ending point (x, y) = {end[0], end[1]}')
     
     for _, point in enumerate(bonus):
         print(f"Bonus point at position (x, y) = {point['coord'][0], point['coord'][1]} with point {point['score']}")
+        
+    return fig

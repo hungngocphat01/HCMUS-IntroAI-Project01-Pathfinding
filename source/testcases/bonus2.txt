@@ -1,16 +1,16 @@
 5
 19 13 -10
-7 3 -6
-9 13 -1
+17 26 -1
+9 13 -15
 16 19 -5
 1 17 -20
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xS       x       +         x  x
 xxxx  x  x  xxxx  xxxxxxx  x  x
 x  x  x  x  x        x  x  x  x
-x  xxxx  xxxx  xxxx  x  xxxx  x
+x  xxxx  xxxx  xx x  x  xxxx  x
 x  x  x        x              x
-x  x  xxxx  xxxxxxxxxxxxxxxx  x
+x  x  xxxx  xxxxx xxxxxxxxxx  x
 x        x     x  x     x     x
 xxxxxxx  x  xxxx  x  xxxxx x  x
 x              x  x        x  x
@@ -21,7 +21,7 @@ x  x     x  x  x  xxxx    x   x
 xxxxxxx  x  xxxx  xxxx  xxx   x
 x     x     x     x           x
 x  xxxx  x  xxxx  x  xxxxx xxxx
-x     x  x     x  x     x  x  x
-x  xxxxxxxxxx  xxxxxxxxxx  x  x
+x     x  x     x  x     x +x  x
+x  xxxxxxxxxx  xx xxxxxxx  x  x
 x              x               
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

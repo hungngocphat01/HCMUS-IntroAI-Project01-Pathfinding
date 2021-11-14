@@ -7,6 +7,7 @@ PDF:='BaoCaoLab01'
 NOTEBOOKS:= report1 report-nobonus report-withbonus report-summary report-cite
 
 $(PDF): main.tex
+	mv tmp/main_files .  
 	rm -rf build
 	docker run -it -v "$(shell pwd)":/work --user "$(shell id -u):$(shell id -g)" -w /work texlive/texlive \
 		latexmk -f --shell-escape -interaction=nonstopmode -file-line-error -pdf -outdir=build  $<
@@ -19,7 +20,6 @@ $(PDF): main.tex
 main.tex: tmp/main.ipynb 
 	jupyter nbconvert --to latex $^ --template-file $(shell pwd)/report_template.tex.j2 
 	mv tmp/$@ .
-	sed -i '/\\begin{Verbatim/ s/\]/,fontsize=\\footnotesize]/g' $@
 
 tmp/main.ipynb: $(patsubst %,%.ipynb,$(NOTEBOOKS))
 	rm -f $@
@@ -31,3 +31,4 @@ clean:
 	rm -f *.tex
 	rm -rf build 
 	rm -rf tmp
+	rm -rf main_files

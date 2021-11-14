@@ -1,3 +1,4 @@
+from copy import deepcopy
 from maze_preprocess import preprocess_maze
 from teacher_utils import read_file, visualize_maze
 
@@ -62,7 +63,7 @@ class Graph:
                 prev_cost = neighbor['cost']
         self.node_list[coord].prev_cost = prev_cost
 
-    def get_path(self, custom_start=None, custom_end=None) -> tuple:
+    def get_path(self, custom_start=None, custom_end=None, no_bonus=False) -> tuple:
         """
         Lấy đường đi của mê cung sau khi đã giải xong.
         Trả về: danh sách các tọa độ từ START -> END và tổng chi phí.
@@ -82,13 +83,14 @@ class Graph:
             cost += 1
             # Đến node tiếp theo
             node = self.node_list[node.prev]
-        path.append(self.start)
+        path.append(start_coord)
         
-        for node in path:
-            if self.bonus_points is not None:
-                for bonus in self.bonus_points:
-                    if bonus['coord'] == node:
-                        cost += bonus['score']
+        if not no_bonus:
+            for node in path:
+                if self.bonus_points is not None:
+                    for bonus in self.bonus_points:
+                        if bonus['coord'] == node:
+                            cost += bonus['score']
         path.reverse()
         return path, cost
     
@@ -105,12 +107,12 @@ class Graph:
         visited = visited - set(path)
         return visited, list(path), cost
     
-    def visualize(self, route=None, visited=None, figsize=(5, 3)):
+    def visualize(self, route=None, visited=None, figsize=(5, 3), dont_show=False):
         """
         Vẽ mê cung của đồ thị này
         """
-        visualize_maze(self.ascii_matrix, self.bonus_points, 
-                       self.start, self.end, route, figsize=figsize, visited=visited)
+        return visualize_maze(self.ascii_matrix, self.bonus_points, 
+                       self.start, self.end, route, figsize=figsize, visited=visited, dont_show=dont_show)
     
     def clear(self):
         """
@@ -120,4 +122,10 @@ class Graph:
             self.node_list[node].prev = None
             self.node_list[node].prev_cost = None
             self.node_list[node].path_cost = 0
+            
+    def get_bonus_point(self, coord):
+        for point in self.bonus_points:
+            if point['coord'] == coord:
+                return deepcopy(point)
+        return {'coord': coord, 'score': 0}
     
