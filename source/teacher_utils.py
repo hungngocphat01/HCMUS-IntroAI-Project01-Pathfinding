@@ -1,6 +1,9 @@
 import os
 import matplotlib.pyplot as plt
 
+"""
+Module chứa các hàm thầy đã cung cấp trên file đề bài. Có chỉnh sửa lại để biểu diễn được nhiều thông tin hơn.
+"""
 
 def read_file(file_name: str = 'maze.txt'):
     """

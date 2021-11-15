@@ -4,6 +4,17 @@ from Queue import Queue
 from heuristic_func import *
 from copy import deepcopy
 
+"""
+Module cài đặt các hàm tìm kiếm không có điểm thưởng
+Mỗi hàm đều có các tham số sau:
+- `graph`: đồ thị cần chạy thuật toán tìm.
+- `custom_start`: điểm bắt đầu tùy chọn. Nếu không có thì điểm bắt đầu sẽ được lấy là điểm start của đồ thị.
+- `custom_end`: điểm kết thúc tùy chọn, tương tự như trên.
+- `hf` (nếu có): con trỏ đến hàm heuristic.
+
+Trả về: True nếu có đường đi, False nếu không có.
+"""
+
 def BFS(graph: Graph, custom_start=None, custom_end=None):
     # Kiểm tra người dùng có specify điểm bắt đầu và kết thúc tùy chỉnh hay không
     # Phục vụ cho phần điểm thưởng
@@ -184,7 +195,9 @@ def Astar(graph: Graph, hf, custom_start=None, custom_end=None, custom_visited=N
                     fringe.update_fcost(succ['coord'], fcost)                    
     return False
 
-
+"""
+Đây là hàm cài đặt A* cho trường hợp có điểm thưởng, với một hàm heuristic tùy chinhr để "thu hút" agent đi về phía các điểm thưởng, nhưng thất bại nên tụi em đã bỏ nó.
+"""
 # def Astar_bonus(graph: Graph, hf, custom_start=None, custom_end=None, custom_visited=None):
 #     # Kiểm tra người dùng có specify điểm bắt đầu và kết thúc tùy chỉnh hay không
 #     # Phục vụ cho phần điểm thưởng

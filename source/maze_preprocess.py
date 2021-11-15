@@ -1,4 +1,7 @@
 class Node:
+    """
+    Lớp đối tượng biểu diễn một đỉnh trên đồ thị
+    """
     def __init__(self, coord):
         # Tọa độ của node hiện tại 
         self.coord = coord

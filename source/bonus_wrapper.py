@@ -1,3 +1,6 @@
+"""
+Module cài đặt việc tìm kiếm có điểm thưởng
+"""
 from Graph import Graph
 from Queue import Queue
 from Stack import Stack
@@ -5,21 +8,32 @@ from maze_preprocess import Node
 from copy import deepcopy
 
 def bonus_wrapper(g: Graph, algorithm, hf):
+    """
+    Hàm chạy thuật toán tìm kiếm trên bản đồ có điểm thưởng.
+    Truyền vào: đồ thị cần tìm, con trỏ hàm đến thuật toán và con trỏ hàm đến hàm heuristic.
+    Trả về: path_tracker, prev_node_tracker
+    
+    - path_tracker: đường đi trên từng chặng.
+    - prev_node_tracker: bảng tra chặng (để biết trước khi đi vào 1 node ta đã ở đâu)
+    """
+    # Các node đi được bao gồm tất cả các node điểm thưởng và node end
     traversable = []
     for node in g.bonus_points:
         traversable.append(node['coord'])
     traversable.append(g.end)
-     
-    forbidden = set()
     
+    # Tập các node cụt (bị cấm)
+    forbidden = set()
+    # Bảng tra đường đi và tra chặng
     path_tracker = {}
     prev_node_tracker = {g.start: None}
     total_cost = 0
-        
+    # Bảng tra các node đã viếng trên từng chặng
     visited = {node: set() for node in traversable}
     visited[None] = set()
     visited[g.start] = set()
     
+    # Bắt đầu thuật toán
     current = g.start
     while True:
         # Nếu tất cả các node đều bị cấm: không có đuòng đi
@@ -44,9 +58,11 @@ def bonus_wrapper(g: Graph, algorithm, hf):
             current = prev_node_tracker[current]
             print('Hmmm, this seems to be a dead end. Me go back then.')
             continue 
-
+        
+        # Lấy ra node gần nhất với node hiện tại
         dest, _ = fringe.pop()
         
+        # Thêm các node trên đường đi đi vào node này để ngăn thuật toán đi vào 1 ô 2 lần
         path_to_current = set()
         if current != g.start:
             prev_node = prev_node_tracker[current]
@@ -76,6 +92,9 @@ def bonus_wrapper(g: Graph, algorithm, hf):
             return path_tracker, prev_node_tracker
         
 def process_path_bonus(start, end, path_tracker, prev_node_tracker):
+    """
+    Hàm lấy đường đi trên từng chặng (có điểm thưởng)
+    """
     total_cost = 0
     node = end 
     
@@ -98,6 +117,9 @@ def process_path_bonus(start, end, path_tracker, prev_node_tracker):
     return path, total_cost
 
 def process_path_total(g: Graph, path_tracker, prev_node_tracker):
+    """
+    Hàm lấy đường đi trên toàn bộ đồ thị (có điểm thưởng)
+    """
     path, total_cost = process_path_bonus(g.start, g.end, path_tracker, prev_node_tracker)
     
     for node in path:

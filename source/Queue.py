@@ -37,12 +37,19 @@ class Queue:
         return element
     
     def contains(self, element):
+        """
+        Hàm kiểm tra một phần tử nào đó có trong hàng đợi hay không
+        """
         for e in self.queue:
             if element == e[0]:
                 return True
         return False
     
     def update_fcost(self, element, cost):
+        """
+        Cập nhật lại fcost của 1 node nào đó (và sắp xếp lại hàng đợi).
+        Có vẻ không "tự nhiên" lắm với định nghĩa của CTDL này nhưng để tiện thì tụi em đành phải làm vậy.
+        """
         for i, e in enumerate(self.queue):
             if e == element:
                 self.queue[i][1] = cost
